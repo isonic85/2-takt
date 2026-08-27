@@ -1,17 +1,21 @@
 <!doctype html>
 <html lang="sv">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#101820" />
-  <title>2‑T Oljeblandning</title>
-<link rel="apple-touch-icon" sizes="512x512" href="2t-icon-512(1).png">
-<link rel="icon" type="image/png" sizes="512x512" href="2t-icon-512(1).png">
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="2-T Blandning" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101820">
+
+  <title>2-T Oljeblandning</title>
+
+  <link rel="apple-touch-icon" href="2t-icon-512.png">
+  <link rel="icon" type="image/png" href="2t-icon-512.png">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="2-T Blandning">
+
   <style>
-    :root{
+    :root {
       --bg:#0b1117;
       --card:#121b24;
       --card-2:#182431;
@@ -24,302 +28,1969 @@
       --shadow:0 18px 45px rgba(0,0,0,.28);
     }
 
-    *{box-sizing:border-box}
-    html{color-scheme:dark}
-    body{
+    * {
+      box-sizing:border-box;
+    }
+
+    html {
+      color-scheme:dark;
+    }
+
+    body {
       margin:0;
       min-height:100vh;
-      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", sans-serif;
+
       background:
-        radial-gradient(circle at 10% 0%, rgba(255,159,28,.14), transparent 28rem),
-        linear-gradient(180deg, #0b1117 0%, #091017 100%);
+        radial-gradient(
+          circle at 10% 0%,
+          rgba(255,159,28,.14),
+          transparent 28rem
+        ),
+        linear-gradient(
+          180deg,
+          #0b1117 0%,
+          #091017 100%
+        );
+
       color:var(--text);
+
       display:grid;
       place-items:center;
+
       padding:24px;
     }
 
-    .app{
+    .app {
       width:min(100%, 560px);
     }
 
-    .hero{
+    .hero {
       margin-bottom:18px;
     }
 
-    .eyebrow{
-      text-align: center;
+    .eyebrow {
+      text-align:center;
+
       color:var(--accent-2);
+
       font-size:.78rem;
       font-weight:800;
+
       letter-spacing:.14em;
       text-transform:uppercase;
+
       margin-bottom:8px;
     }
 
-    h1{
-      text-align: center;
+    h1 {
+      text-align:center;
+
       margin:0;
-      font-size:clamp(2rem, 7vw, 3.25rem);
+
+      font-size:clamp(2rem,7vw,3.25rem);
       line-height:1;
+
       letter-spacing:-.04em;
     }
 
-    .subtitle{
-      text-align: center;
+    .subtitle {
+      text-align:center;
+
       margin:12px 0 0;
+
       color:var(--muted);
+
       line-height:1.55;
     }
 
-    .card{
+    .card {
       background:rgba(18,27,36,.92);
+
       border:1px solid var(--border);
       border-radius:24px;
+
       padding:20px;
+
       box-shadow:var(--shadow);
+
       backdrop-filter:blur(10px);
     }
 
-    .field{
+    .field {
       margin-bottom:18px;
     }
 
-    label{
+    label {
       display:block;
+
       font-size:.9rem;
       font-weight:750;
+
       margin-bottom:8px;
+
       color:#dce7f1;
     }
 
-    .input-wrap{
+    .input-wrap {
       display:flex;
       align-items:center;
+
       background:#0c141c;
+
       border:1px solid var(--border);
       border-radius:16px;
+
       overflow:hidden;
     }
 
-    input{
+    input {
       width:100%;
+
       border:0;
       outline:none;
+
       background:transparent;
+
       color:var(--text);
+
       font:inherit;
       font-size:1.35rem;
       font-weight:800;
+
       padding:15px 16px;
     }
 
-    .unit{
+    .unit {
       color:var(--muted);
+
       font-weight:800;
+
       padding:0 16px 0 8px;
+
+      white-space:nowrap;
     }
 
-    .presets{
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:8px;
-      margin-top:10px;
-    }
-
-    button{
+    button {
       font:inherit;
     }
 
-    .preset{
+    /* Huvudlägen */
+
+    .mode-switch {
+      display:grid;
+
+      grid-template-columns:repeat(3,1fr);
+
+      gap:8px;
+
+      margin-bottom:18px;
+    }
+
+    .mode-btn {
       border:1px solid var(--border);
+
       background:var(--card-2);
+
       color:var(--text);
-      border-radius:12px;
-      padding:5px 6px;
+
+      border-radius:14px;
+
+      padding:10px 6px;
+
       font-weight:800;
+
       cursor:pointer;
+
       transition:.18s ease;
     }
 
-    .preset:hover{transform:translateY(-1px); border-color:#3b5269}
-    .preset.active{
+    .mode-btn.active {
       background:var(--accent);
+
       color:#1a1205;
+
       border-color:var(--accent);
     }
 
-    .result{
-      text-align: center;
+    /* Procent / förhållande */
+
+    .mix-switch {
+      display:grid;
+
+      grid-template-columns:repeat(2,1fr);
+
+      gap:8px;
+
+      margin-bottom:18px;
+    }
+
+    .mix-btn {
+      border:1px solid var(--border);
+
+      background:var(--card-2);
+
+      color:var(--text);
+
+      border-radius:14px;
+
+      padding:10px 8px;
+
+      font-weight:800;
+
+      cursor:pointer;
+
+      transition:.18s ease;
+    }
+
+    .mix-btn.active {
+      background:var(--accent);
+
+      color:#1a1205;
+
+      border-color:var(--accent);
+    }
+
+    /* Snabbval */
+
+    .presets {
+      display:grid;
+
+      grid-template-columns:repeat(5,1fr);
+
+      gap:8px;
+
+      margin-top:10px;
+    }
+
+    .preset {
+      border:1px solid var(--border);
+
+      background:var(--card-2);
+
+      color:var(--text);
+
+      border-radius:12px;
+
+      padding:6px;
+
+      font-weight:800;
+
+      cursor:pointer;
+
+      transition:.18s ease;
+    }
+
+    .preset:hover {
+      transform:translateY(-1px);
+
+      border-color:#3b5269;
+    }
+
+    .preset.active {
+      background:var(--accent);
+
+      color:#1a1205;
+
+      border-color:var(--accent);
+    }
+
+    /* Resultat */
+
+    .result {
+      text-align:center;
+
       margin-top:20px;
+
       border-radius:20px;
+
       padding:20px;
+
       background:
-        linear-gradient(135deg, rgba(255,159,28,.16), rgba(255,209,102,.06)),
+        linear-gradient(
+          135deg,
+          rgba(255,159,28,.16),
+          rgba(255,209,102,.06)
+        ),
         #0d151d;
+
       border:1px solid rgba(255,159,28,.35);
     }
 
-    .result-label{
+    .result-label {
       color:var(--muted);
+
       font-size:.88rem;
       font-weight:750;
     }
 
-    .result-main{
+    .result-main {
       display:flex;
+
       align-items:baseline;
       justify-content:center;
+
       gap:9px;
+
       margin-top:4px;
+
       flex-wrap:wrap;
     }
 
-    .result-number{
-      font-size:clamp(3rem, 13vw, 5.4rem);
+    .result-number {
+      font-size:clamp(3rem,13vw,5.4rem);
+
       line-height:.95;
+
       font-weight:950;
+
       letter-spacing:-.06em;
+
       color:var(--accent-2);
     }
 
-    .result-unit{
+    .result-unit {
       font-size:1.35rem;
+
       font-weight:850;
+
       color:#f9dca6;
     }
 
-    .mixline{
+    .mixline {
       margin-top:13px;
+
       color:#d7e2ec;
+
       font-size:.95rem;
+
       line-height:1.5;
     }
 
-    .ratio{
+    .ratio {
       color:var(--ok);
+
       font-weight:850;
     }
 
-    .examples{
+    /* Snabbval mängd */
+
+    .examples {
       margin-top:16px;
+
       display:grid;
+
       grid-template-columns:repeat(4,1fr);
+
       gap:8px;
     }
 
-    .example{
+    .example {
       background:#0d151d;
+
       border:1px solid var(--border);
       border-radius:14px;
-      padding:2px;
+
+      padding:4px;
+
       text-align:center;
+
       cursor:pointer;
     }
 
-    .example strong{
+    .example strong {
       display:block;
+
       color:var(--text);
+
       font-size:1rem;
     }
 
-    .example span{
+    .example span {
       color:var(--muted);
+
       font-size:.78rem;
     }
 
-    .note{
+    /* Korrigering */
+
+    .correction-format {
+      margin-bottom:18px;
+    }
+
+    .correction-grid {
+      display:grid;
+
+      grid-template-columns:1fr 1fr;
+
+      gap:10px;
+    }
+
+    .correction-help {
       color:var(--muted);
+
+      font-size:.8rem;
+
+      line-height:1.5;
+
+      margin:-5px 0 16px;
+    }
+
+    .hidden {
+      display:none !important;
+    }
+
+    .note {
+      color:var(--muted);
+
       font-size:.78rem;
+
       line-height:1.45;
+
       margin:15px 2px 0;
+
       text-align:center;
     }
 
+    @media (max-width:430px) {
+      body {
+        padding:16px;
+      }
 
-    .mode-switch,.mix-switch{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:18px;}
-    .mode-btn,.mix-btn{border:1px solid var(--border);background:var(--card-2);color:var(--text);border-radius:14px;padding:10px 8px;font-weight:800;cursor:pointer;}
-    .mode-btn.active,.mix-btn.active{background:var(--accent);color:#1a1205;border-color:var(--accent);}
-    .hidden{display:none !important;}
+      .card {
+        padding:16px;
 
-    @media (max-width:430px){
-      body{padding:16px}
-      .card{padding:16px; border-radius:20px}
-      .presets{grid-template-columns:repeat(5, minmax(0,1fr))}
-      .preset{font-size:.86rem}
+        border-radius:20px;
+      }
+
+      .mode-btn {
+        font-size:.78rem;
+
+        padding:10px 3px;
+      }
+
+      .presets {
+        grid-template-columns:repeat(5,minmax(0,1fr));
+      }
+
+      .preset {
+        font-size:.78rem;
+      }
+
+      .correction-grid {
+        grid-template-columns:1fr;
+      }
     }
   </style>
 </head>
+
 <body>
-  <main class="app">
-    <section class="hero">
-      <div class="eyebrow">Bensin + 2‑taktsolja</div>
-      <h1>2‑T Oljeblandning</h1>
-      <p class="subtitle">Ange hur många liter bensin du har och önskad oljeprocent. Kalkylatorn visar hur många milliliter 2‑taktsolja du ska tillsätta.</p>
-    </section>
 
-    <section class="card">
-      <div class="mode-switch" aria-label="Välj beräkningssätt">
-        <button type="button" class="mode-btn active" data-mode="fuel-to-oil">Bensin → olja</button>
-        <button type="button" class="mode-btn" data-mode="oil-to-fuel">Olja → bensin</button>
+<main class="app">
+
+  <section class="hero">
+
+    <div class="eyebrow">
+      Bensin + 2-taktsolja
+    </div>
+
+    <h1>
+      2-T Oljeblandning
+    </h1>
+
+    <p class="subtitle">
+      Räkna ut rätt mängd 2-taktsolja,
+      omvänd blandning eller korrigera en
+      redan blandad dunk.
+    </p>
+
+  </section>
+
+
+  <section class="card">
+
+    <!-- Huvudlägen -->
+
+    <div
+      class="mode-switch"
+      aria-label="Välj beräkningssätt"
+    >
+
+      <button
+        type="button"
+        class="mode-btn active"
+        data-mode="fuel-to-oil"
+      >
+        Bensin → olja
+      </button>
+
+      <button
+        type="button"
+        class="mode-btn"
+        data-mode="oil-to-fuel"
+      >
+        Olja → bensin
+      </button>
+
+      <button
+        type="button"
+        class="mode-btn"
+        data-mode="correct"
+      >
+        Korrigera
+      </button>
+
+    </div>
+
+
+    <!-- Bensin -->
+
+    <div
+      class="field"
+      id="fuelField"
+    >
+
+      <label for="fuel">
+        Mängd bensin
+      </label>
+
+      <div class="input-wrap">
+
+        <input
+          id="fuel"
+          type="number"
+          inputmode="decimal"
+          min="0"
+          step="0.1"
+          value="5"
+        >
+
+        <span class="unit">
+          liter
+        </span>
+
       </div>
 
-      <div class="field" id="fuelField">
-        <label for="fuel">Mängd bensin</label>
-        <div class="input-wrap"><input id="fuel" type="number" inputmode="decimal" min="0" step="0.1" value="5"><span class="unit">liter</span></div>
+    </div>
+
+
+    <!-- Olja för omvänd kalkyl -->
+
+    <div
+      class="field hidden"
+      id="oilInputField"
+    >
+
+      <label for="oilInput">
+        Mängd 2-taktsolja
+      </label>
+
+      <div class="input-wrap">
+
+        <input
+          id="oilInput"
+          type="number"
+          inputmode="decimal"
+          min="0"
+          step="1"
+          value="100"
+        >
+
+        <span class="unit">
+          ml
+        </span>
+
       </div>
 
-      <div class="field hidden" id="oilInputField">
-        <label for="oilInput">Mängd 2‑taktsolja</label>
-        <div class="input-wrap"><input id="oilInput" type="number" inputmode="decimal" min="0" step="1" value="100"><span class="unit">ml</span></div>
-      </div>
+    </div>
 
-      <div class="mix-switch" aria-label="Välj blandningsformat">
-        <button type="button" class="mix-btn active" data-mix="percent">Procent %</button>
-        <button type="button" class="mix-btn" data-mix="ratio">Förhållande 1:X</button>
-      </div>
+
+    <!-- Korrigering -->
+
+    <div
+      id="correctionFields"
+      class="hidden"
+    >
 
       <div class="field">
-        <label for="mixValue" id="mixLabel">Oljeblandning</label>
-        <div class="input-wrap"><input id="mixValue" type="number" inputmode="decimal" min="0.1" step="0.1" value="2"><span class="unit" id="mixUnit">%</span></div>
-        <div class="presets" id="percentPresets">
-          <button class="preset" data-pct="1">1 %</button><button class="preset active" data-pct="2">2 %</button><button class="preset" data-pct="2.5">2,5 %</button><button class="preset" data-pct="3">3 %</button><button class="preset" data-pct="4">4 %</button>
+
+        <label for="existingMix">
+          Mängd befintlig blandning
+        </label>
+
+        <div class="input-wrap">
+
+          <input
+            id="existingMix"
+            type="number"
+            inputmode="decimal"
+            min="0"
+            step="0.1"
+            value="10"
+          >
+
+          <span class="unit">
+            liter
+          </span>
+
         </div>
-        <div class="presets hidden" id="ratioPresets">
-          <button class="preset" data-ratio="100">1:100</button><button class="preset active" data-ratio="50">1:50</button><button class="preset" data-ratio="40">1:40</button><button class="preset" data-ratio="33.3">1:33</button><button class="preset" data-ratio="25">1:25</button>
+
+      </div>
+
+
+      <div class="correction-format">
+
+        <div class="mix-switch">
+
+          <button
+            type="button"
+            class="mix-btn correction-mix-btn active"
+            data-correction-format="percent"
+          >
+            Procent %
+          </button>
+
+          <button
+            type="button"
+            class="mix-btn correction-mix-btn"
+            data-correction-format="ratio"
+          >
+            Förhållande 1:X
+          </button>
+
         </div>
+
       </div>
 
-      <div class="result" aria-live="polite">
-        <div class="result-label" id="resultLabel">Tillsätt 2‑taktsolja</div>
-        <div class="result-main"><div class="result-number" id="resultNumber">100</div><div class="result-unit" id="resultUnit">ml</div></div>
-        <div class="mixline" id="details"></div>
+
+      <div class="correction-grid">
+
+        <div class="field">
+
+          <label for="currentCorrection">
+            Nuvarande blandning
+          </label>
+
+          <div class="input-wrap">
+
+            <input
+              id="currentCorrection"
+              type="number"
+              inputmode="decimal"
+              min="0.1"
+              step="0.1"
+              value="1"
+            >
+
+            <span
+              class="unit"
+              id="currentCorrectionUnit"
+            >
+              %
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="targetCorrection">
+            Önskad blandning
+          </label>
+
+          <div class="input-wrap">
+
+            <input
+              id="targetCorrection"
+              type="number"
+              inputmode="decimal"
+              min="0.1"
+              step="0.1"
+              value="2"
+            >
+
+            <span
+              class="unit"
+              id="targetCorrectionUnit"
+            >
+              %
+            </span>
+
+          </div>
+
+        </div>
+
       </div>
 
-      <div class="examples" id="fuelExamples">
-        <button class="example" data-liters="5"><strong>5 L</strong><span>snabbval</span></button><button class="example" data-liters="10"><strong>10 L</strong><span>snabbval</span></button><button class="example" data-liters="20"><strong>20 L</strong><span>snabbval</span></button><button class="example" data-liters="22.5"><strong>22,5 L</strong><span>snabbval</span></button>
-      </div>
-      <div class="examples hidden" id="oilExamples">
-        <button class="example" data-oil="50"><strong>50 ml</strong><span>snabbval</span></button><button class="example" data-oil="100"><strong>100 ml</strong><span>snabbval</span></button><button class="example" data-oil="250"><strong>250 ml</strong><span>snabbval</span></button><button class="example" data-oil="500"><strong>500 ml</strong><span>snabbval</span></button>
+
+      <div class="correction-help">
+
+        Är blandningen för mager räknar appen ut
+        hur mycket olja som ska tillsättas.
+        Är den för fet räknar den ut hur mycket
+        bensin som behövs.
+
       </div>
 
-      <p class="note">Följ alltid motortillverkarens rekommenderade blandningsförhållande. Vissa moderna motorer kräver annan oljeprocent.</p>
-    </section>
-  </main>
+    </div>
 
-  <script>
-    const $=id=>document.getElementById(id), fuel=$('fuel'), oilInput=$('oilInput'), mixValue=$('mixValue');
-    let direction='fuel-to-oil', mixMode='percent';
-    function fmt(n,d=2){return new Intl.NumberFormat('sv-SE',{maximumFractionDigits:d}).format(n)}
-    function currentPercent(){const v=Math.max(0,parseFloat(mixValue.value)||0);return mixMode==='ratio'?(v?100/v:0):v}
-    function calc(){const p=currentPercent(),r=p?100/p:0;if(direction==='fuel-to-oil'){const l=Math.max(0,parseFloat(fuel.value)||0),ml=l*10*p;$('resultLabel').textContent='Tillsätt 2‑taktsolja';$('resultNumber').textContent=fmt(ml,ml<10?1:0);$('resultUnit').textContent='ml';$('details').innerHTML=`${fmt(l)} liter bensin + ${fmt(ml,ml<10?1:0)} ml olja`+(r?` · <span class="ratio">ca 1:${fmt(r,1)}</span>`:'')}else{const ml=Math.max(0,parseFloat(oilInput.value)||0),l=p?ml/(10*p):0;$('resultLabel').textContent='Oljan räcker till';$('resultNumber').textContent=fmt(l,2);$('resultUnit').textContent='liter bensin';$('details').innerHTML=`${fmt(ml)} ml olja räcker till ${fmt(l,2)} liter bensin`+(r?` · <span class="ratio">ca 1:${fmt(r,1)}</span>`:'')}}
-    document.querySelectorAll('.mode-btn').forEach(btn=>btn.addEventListener('click',()=>{direction=btn.dataset.mode;document.querySelectorAll('.mode-btn').forEach(b=>b.classList.toggle('active',b===btn));const rev=direction==='oil-to-fuel';$('fuelField').classList.toggle('hidden',rev);$('fuelExamples').classList.toggle('hidden',rev);$('oilInputField').classList.toggle('hidden',!rev);$('oilExamples').classList.toggle('hidden',!rev);calc()}));
-    document.querySelectorAll('.mix-btn').forEach(btn=>btn.addEventListener('click',()=>{if(btn.dataset.mix===mixMode)return;const oldPct=currentPercent();mixMode=btn.dataset.mix;document.querySelectorAll('.mix-btn').forEach(b=>b.classList.toggle('active',b===btn));if(mixMode==='ratio'){mixValue.value=oldPct?(100/oldPct).toFixed(1).replace('.0',''):'50';$('mixLabel').textContent='Blandningsförhållande';$('mixUnit').textContent='1:X';$('percentPresets').classList.add('hidden');$('ratioPresets').classList.remove('hidden')}else{const rv=Math.max(0,parseFloat(mixValue.value)||0);mixValue.value=rv?(100/rv).toFixed(2).replace(/0+$/,'').replace(/\.$/,''):'2';$('mixLabel').textContent='Oljeblandning';$('mixUnit').textContent='%';$('ratioPresets').classList.add('hidden');$('percentPresets').classList.remove('hidden')}calc()}));
-    document.querySelectorAll('[data-pct]').forEach(btn=>btn.addEventListener('click',()=>{mixValue.value=btn.dataset.pct;calc()}));
-    document.querySelectorAll('[data-ratio]').forEach(btn=>btn.addEventListener('click',()=>{mixValue.value=btn.dataset.ratio;calc()}));
-    document.querySelectorAll('[data-liters]').forEach(btn=>btn.addEventListener('click',()=>{fuel.value=btn.dataset.liters;calc()}));
-    document.querySelectorAll('[data-oil]').forEach(btn=>btn.addEventListener('click',()=>{oilInput.value=btn.dataset.oil;calc()}));
-    [fuel,oilInput,mixValue].forEach(el=>el.addEventListener('input',calc));calc();
-  </script>
+
+    <!-- Blandningsformat vanliga lägen -->
+
+    <div
+      class="mix-switch"
+      id="normalMixSwitch"
+    >
+
+      <button
+        type="button"
+        class="mix-btn normal-mix-btn active"
+        data-mix="percent"
+      >
+        Procent %
+      </button>
+
+      <button
+        type="button"
+        class="mix-btn normal-mix-btn"
+        data-mix="ratio"
+      >
+        Förhållande 1:X
+      </button>
+
+    </div>
+
+
+    <!-- Blandningsvärde -->
+
+    <div
+      class="field"
+      id="normalMixField"
+    >
+
+      <label
+        for="mixValue"
+        id="mixLabel"
+      >
+        Oljeblandning
+      </label>
+
+      <div class="input-wrap">
+
+        <input
+          id="mixValue"
+          type="number"
+          inputmode="decimal"
+          min="0.1"
+          step="0.1"
+          value="2"
+        >
+
+        <span
+          class="unit"
+          id="mixUnit"
+        >
+          %
+        </span>
+
+      </div>
+
+
+      <!-- Procent snabbval -->
+
+      <div
+        class="presets"
+        id="percentPresets"
+      >
+
+        <button
+          class="preset"
+          data-pct="1"
+        >
+          1 %
+        </button>
+
+        <button
+          class="preset active"
+          data-pct="2"
+        >
+          2 %
+        </button>
+
+        <button
+          class="preset"
+          data-pct="2.5"
+        >
+          2,5 %
+        </button>
+
+        <button
+          class="preset"
+          data-pct="3"
+        >
+          3 %
+        </button>
+
+        <button
+          class="preset"
+          data-pct="4"
+        >
+          4 %
+        </button>
+
+      </div>
+
+
+      <!-- Förhållande snabbval -->
+
+      <div
+        class="presets hidden"
+        id="ratioPresets"
+      >
+
+        <button
+          class="preset"
+          data-ratio="100"
+        >
+          1:100
+        </button>
+
+        <button
+          class="preset active"
+          data-ratio="50"
+        >
+          1:50
+        </button>
+
+        <button
+          class="preset"
+          data-ratio="40"
+        >
+          1:40
+        </button>
+
+        <button
+          class="preset"
+          data-ratio="33.3"
+        >
+          1:33
+        </button>
+
+        <button
+          class="preset"
+          data-ratio="25"
+        >
+          1:25
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- Resultat -->
+
+    <div
+      class="result"
+      aria-live="polite"
+    >
+
+      <div
+        class="result-label"
+        id="resultLabel"
+      >
+        Tillsätt 2-taktsolja
+      </div>
+
+      <div class="result-main">
+
+        <div
+          class="result-number"
+          id="resultNumber"
+        >
+          100
+        </div>
+
+        <div
+          class="result-unit"
+          id="resultUnit"
+        >
+          ml
+        </div>
+
+      </div>
+
+      <div
+        class="mixline"
+        id="details"
+      ></div>
+
+    </div>
+
+
+    <!-- Bensin snabbval -->
+
+    <div
+      class="examples"
+      id="fuelExamples"
+    >
+
+      <button
+        class="example"
+        data-liters="5"
+      >
+        <strong>5 L</strong>
+        <span>snabbval</span>
+      </button>
+
+      <button
+        class="example"
+        data-liters="10"
+      >
+        <strong>10 L</strong>
+        <span>snabbval</span>
+      </button>
+
+      <button
+        class="example"
+        data-liters="20"
+      >
+        <strong>20 L</strong>
+        <span>snabbval</span>
+      </button>
+
+      <button
+        class="example"
+        data-liters="22.5"
+      >
+        <strong>22,5 L</strong>
+        <span>snabbval</span>
+      </button>
+
+    </div>
+
+
+    <!-- Olja snabbval -->
+
+    <div
+      class="examples hidden"
+      id="oilExamples"
+    >
+
+      <button
+        class="example"
+        data-oil="50"
+      >
+        <strong>50 ml</strong>
+        <span>snabbval</span>
+      </button>
+
+      <button
+        class="example"
+        data-oil="100"
+      >
+        <strong>100 ml</strong>
+        <span>snabbval</span>
+      </button>
+
+      <button
+        class="example"
+        data-oil="250"
+      >
+        <strong>250 ml</strong>
+        <span>snabbval</span>
+      </button>
+
+      <button
+        class="example"
+        data-oil="500"
+      >
+        <strong>500 ml</strong>
+        <span>snabbval</span>
+      </button>
+
+    </div>
+
+
+    <p class="note">
+      Följ alltid motortillverkarens
+      rekommenderade blandningsförhållande.
+    </p>
+
+  </section>
+
+</main>
+
+
+<script>
+
+  const $ = id =>
+    document.getElementById(id);
+
+
+  const fuel =
+    $('fuel');
+
+  const oilInput =
+    $('oilInput');
+
+  const mixValue =
+    $('mixValue');
+
+  const existingMix =
+    $('existingMix');
+
+  const currentCorrection =
+    $('currentCorrection');
+
+  const targetCorrection =
+    $('targetCorrection');
+
+
+  let direction =
+    'fuel-to-oil';
+
+  let mixMode =
+    'percent';
+
+  let correctionFormat =
+    'percent';
+
+
+  function fmt(
+    number,
+    decimals = 2
+  ) {
+
+    return new Intl.NumberFormat(
+      'sv-SE',
+      {
+        maximumFractionDigits:decimals
+      }
+    ).format(number);
+
+  }
+
+
+  function currentPercent() {
+
+    const value =
+      Math.max(
+        0,
+        parseFloat(mixValue.value) || 0
+      );
+
+    if (
+      mixMode === 'ratio'
+    ) {
+
+      return value
+        ? 100 / value
+        : 0;
+
+    }
+
+    return value;
+
+  }
+
+
+  function correctionPercent(
+    value
+  ) {
+
+    value =
+      Math.max(
+        0,
+        parseFloat(value) || 0
+      );
+
+    if (
+      correctionFormat === 'ratio'
+    ) {
+
+      return value
+        ? 100 / value
+        : 0;
+
+    }
+
+    return value;
+
+  }
+
+
+  function calculateNormal() {
+
+    const percent =
+      currentPercent();
+
+    const ratio =
+      percent
+        ? 100 / percent
+        : 0;
+
+
+    /* Bensin → olja */
+
+    if (
+      direction === 'fuel-to-oil'
+    ) {
+
+      const liters =
+        Math.max(
+          0,
+          parseFloat(fuel.value) || 0
+        );
+
+      const oilMl =
+        liters *
+        1000 *
+        percent /
+        100;
+
+
+      $('resultLabel').textContent =
+        'Tillsätt 2-taktsolja';
+
+      $('resultNumber').textContent =
+        fmt(
+          oilMl,
+          oilMl < 10 ? 1 : 0
+        );
+
+      $('resultUnit').textContent =
+        'ml';
+
+
+      $('details').innerHTML =
+
+        `${fmt(liters)} liter bensin + ` +
+
+        `${fmt(
+          oilMl,
+          oilMl < 10 ? 1 : 0
+        )} ml olja` +
+
+        (
+          ratio
+            ? ` · <span class="ratio">
+                 ca 1:${fmt(ratio,1)}
+               </span>`
+            : ''
+        );
+
+    }
+
+
+    /* Olja → bensin */
+
+    else {
+
+      const oilMl =
+        Math.max(
+          0,
+          parseFloat(oilInput.value) || 0
+        );
+
+
+      const liters =
+        percent
+          ? oilMl /
+            (
+              1000 *
+              percent /
+              100
+            )
+          : 0;
+
+
+      $('resultLabel').textContent =
+        'Oljan räcker till';
+
+      $('resultNumber').textContent =
+        fmt(
+          liters,
+          2
+        );
+
+      $('resultUnit').textContent =
+        'liter bensin';
+
+
+      $('details').innerHTML =
+
+        `${fmt(oilMl)} ml olja räcker till ` +
+
+        `${fmt(liters,2)} liter bensin` +
+
+        (
+          ratio
+            ? ` · <span class="ratio">
+                 ca 1:${fmt(ratio,1)}
+               </span>`
+            : ''
+        );
+
+    }
+
+  }
+
+
+  function calculateCorrection() {
+
+    const totalLiters =
+      Math.max(
+        0,
+        parseFloat(existingMix.value) || 0
+      );
+
+
+    const current =
+      correctionPercent(
+        currentCorrection.value
+      );
+
+
+    const target =
+      correctionPercent(
+        targetCorrection.value
+      );
+
+
+    if (
+      totalLiters <= 0 ||
+      current <= 0 ||
+      target <= 0
+    ) {
+
+      $('resultLabel').textContent =
+        'Korrigering';
+
+      $('resultNumber').textContent =
+        '0';
+
+      $('resultUnit').textContent =
+        '';
+
+      $('details').textContent =
+        'Fyll i giltiga värden.';
+
+      return;
+
+    }
+
+
+    /*
+      Blandningsprocenten räknas
+      som mängd olja i förhållande
+      till mängd bensin.
+
+      Exempel:
+      2 % = 20 ml per liter bensin
+           = 1:50
+    */
+
+
+    const currentRatio =
+      current / 100;
+
+
+    /*
+      Befintlig blandning består av:
+
+      bensin + olja = total mängd
+
+      olja = bensin × currentRatio
+    */
+
+
+    const fuelLiters =
+      totalLiters /
+      (
+        1 +
+        currentRatio
+      );
+
+
+    const oilLiters =
+      totalLiters -
+      fuelLiters;
+
+
+    /* Redan korrekt */
+
+    if (
+      Math.abs(
+        current -
+        target
+      ) < 0.000001
+    ) {
+
+      $('resultLabel').textContent =
+        'Blandningen är redan rätt';
+
+      $('resultNumber').textContent =
+        '0';
+
+      $('resultUnit').textContent =
+        'ml';
+
+
+      $('details').innerHTML =
+
+        `${fmt(totalLiters)} liter är redan ` +
+
+        `${fmt(target,2)} %` +
+
+        ` · <span class="ratio">` +
+
+        `1:${fmt(100/target,1)}` +
+
+        `</span>`;
+
+      return;
+
+    }
+
+
+    /* För lite olja → tillsätt olja */
+
+    if (
+      target >
+      current
+    ) {
+
+      const targetOilLiters =
+        fuelLiters *
+        target /
+        100;
+
+
+      const extraOilLiters =
+        targetOilLiters -
+        oilLiters;
+
+
+      const extraOilMl =
+        extraOilLiters *
+        1000;
+
+
+      $('resultLabel').textContent =
+        'Tillsätt olja';
+
+      $('resultNumber').textContent =
+        fmt(
+          extraOilMl,
+          0
+        );
+
+      $('resultUnit').textContent =
+        'ml';
+
+
+      $('details').innerHTML =
+
+        `${fmt(totalLiters)} L från ` +
+
+        `${fmt(current,2)} % till ` +
+
+        `${fmt(target,2)} %` +
+
+        ` · <span class="ratio">` +
+
+        `mål 1:${fmt(100/target,1)}` +
+
+        `</span>`;
+
+    }
+
+
+    /* För mycket olja → tillsätt bensin */
+
+    else {
+
+      const targetFuelLiters =
+        oilLiters /
+        (
+          target /
+          100
+        );
+
+
+      const extraFuelLiters =
+        targetFuelLiters -
+        fuelLiters;
+
+
+      $('resultLabel').textContent =
+        'Tillsätt bensin';
+
+      $('resultNumber').textContent =
+        fmt(
+          extraFuelLiters,
+          2
+        );
+
+      $('resultUnit').textContent =
+        'liter';
+
+
+      $('details').innerHTML =
+
+        `${fmt(totalLiters)} L från ` +
+
+        `${fmt(current,2)} % till ` +
+
+        `${fmt(target,2)} %` +
+
+        ` · <span class="ratio">` +
+
+        `mål 1:${fmt(100/target,1)}` +
+
+        `</span>`;
+
+    }
+
+  }
+
+
+  function calculate() {
+
+    if (
+      direction === 'correct'
+    ) {
+
+      calculateCorrection();
+
+    }
+
+    else {
+
+      calculateNormal();
+
+    }
+
+  }
+
+
+  /* Huvudläge */
+
+
+  document
+    .querySelectorAll(
+      '.mode-btn'
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          'click',
+          () => {
+
+            direction =
+              button.dataset.mode;
+
+
+            document
+              .querySelectorAll(
+                '.mode-btn'
+              )
+              .forEach(
+                item =>
+                  item.classList.toggle(
+                    'active',
+                    item === button
+                  )
+              );
+
+
+            const reverse =
+              direction ===
+              'oil-to-fuel';
+
+
+            const correction =
+              direction ===
+              'correct';
+
+
+            $('fuelField')
+              .classList.toggle(
+                'hidden',
+                reverse ||
+                correction
+              );
+
+
+            $('fuelExamples')
+              .classList.toggle(
+                'hidden',
+                reverse ||
+                correction
+              );
+
+
+            $('oilInputField')
+              .classList.toggle(
+                'hidden',
+                !reverse
+              );
+
+
+            $('oilExamples')
+              .classList.toggle(
+                'hidden',
+                !reverse
+              );
+
+
+            $('correctionFields')
+              .classList.toggle(
+                'hidden',
+                !correction
+              );
+
+
+            $('normalMixSwitch')
+              .classList.toggle(
+                'hidden',
+                correction
+              );
+
+
+            $('normalMixField')
+              .classList.toggle(
+                'hidden',
+                correction
+              );
+
+
+            calculate();
+
+          }
+        );
+
+      }
+    );
+
+
+  /* Normal % / 1:X */
+
+
+  document
+    .querySelectorAll(
+      '.normal-mix-btn'
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          'click',
+          () => {
+
+            if (
+              button.dataset.mix ===
+              mixMode
+            ) {
+
+              return;
+
+            }
+
+
+            const oldPercent =
+              currentPercent();
+
+
+            mixMode =
+              button.dataset.mix;
+
+
+            document
+              .querySelectorAll(
+                '.normal-mix-btn'
+              )
+              .forEach(
+                item =>
+                  item.classList.toggle(
+                    'active',
+                    item === button
+                  )
+              );
+
+
+            if (
+              mixMode === 'ratio'
+            ) {
+
+              mixValue.value =
+                oldPercent
+                  ? (
+                      100 /
+                      oldPercent
+                    )
+                    .toFixed(1)
+                    .replace(
+                      '.0',
+                      ''
+                    )
+                  : '50';
+
+
+              $('mixLabel').textContent =
+                'Blandningsförhållande';
+
+              $('mixUnit').textContent =
+                '1:X';
+
+
+              $('percentPresets')
+                .classList.add(
+                  'hidden'
+                );
+
+
+              $('ratioPresets')
+                .classList.remove(
+                  'hidden'
+                );
+
+            }
+
+            else {
+
+              const ratio =
+                Math.max(
+                  0,
+                  parseFloat(
+                    mixValue.value
+                  ) || 0
+                );
+
+
+              mixValue.value =
+                ratio
+                  ? (
+                      100 /
+                      ratio
+                    )
+                    .toFixed(2)
+                    .replace(
+                      /0+$/,
+                      ''
+                    )
+                    .replace(
+                      /\.$/,
+                      ''
+                    )
+                  : '2';
+
+
+              $('mixLabel').textContent =
+                'Oljeblandning';
+
+              $('mixUnit').textContent =
+                '%';
+
+
+              $('ratioPresets')
+                .classList.add(
+                  'hidden'
+                );
+
+
+              $('percentPresets')
+                .classList.remove(
+                  'hidden'
+                );
+
+            }
+
+
+            calculate();
+
+          }
+        );
+
+      }
+    );
+
+
+  /* Korrigering % / 1:X */
+
+
+  document
+    .querySelectorAll(
+      '.correction-mix-btn'
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          'click',
+          () => {
+
+            if (
+              button.dataset
+                .correctionFormat ===
+              correctionFormat
+            ) {
+
+              return;
+
+            }
+
+
+            const currentPercentValue =
+              correctionPercent(
+                currentCorrection.value
+              );
+
+
+            const targetPercentValue =
+              correctionPercent(
+                targetCorrection.value
+              );
+
+
+            correctionFormat =
+              button.dataset
+                .correctionFormat;
+
+
+            document
+              .querySelectorAll(
+                '.correction-mix-btn'
+              )
+              .forEach(
+                item =>
+                  item.classList.toggle(
+                    'active',
+                    item === button
+                  )
+              );
+
+
+            if (
+              correctionFormat ===
+              'ratio'
+            ) {
+
+              currentCorrection.value =
+                fmt(
+                  100 /
+                  currentPercentValue,
+                  1
+                )
+                .replace(
+                  ',',
+                  '.'
+                );
+
+
+              targetCorrection.value =
+                fmt(
+                  100 /
+                  targetPercentValue,
+                  1
+                )
+                .replace(
+                  ',',
+                  '.'
+                );
+
+
+              $('currentCorrectionUnit')
+                .textContent =
+                '1:X';
+
+
+              $('targetCorrectionUnit')
+                .textContent =
+                '1:X';
+
+            }
+
+            else {
+
+              currentCorrection.value =
+                fmt(
+                  currentPercentValue,
+                  2
+                )
+                .replace(
+                  ',',
+                  '.'
+                );
+
+
+              targetCorrection.value =
+                fmt(
+                  targetPercentValue,
+                  2
+                )
+                .replace(
+                  ',',
+                  '.'
+                );
+
+
+              $('currentCorrectionUnit')
+                .textContent =
+                '%';
+
+
+              $('targetCorrectionUnit')
+                .textContent =
+                '%';
+
+            }
+
+
+            calculate();
+
+          }
+        );
+
+      }
+    );
+
+
+  /* Snabbval procent */
+
+
+  document
+    .querySelectorAll(
+      '[data-pct]'
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          'click',
+          () => {
+
+            mixValue.value =
+              button.dataset.pct;
+
+            calculate();
+
+          }
+        );
+
+      }
+    );
+
+
+  /* Snabbval förhållande */
+
+
+  document
+    .querySelectorAll(
+      '[data-ratio]'
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          'click',
+          () => {
+
+            mixValue.value =
+              button.dataset.ratio;
+
+            calculate();
+
+          }
+        );
+
+      }
+    );
+
+
+  /* Snabbval bensin */
+
+
+  document
+    .querySelectorAll(
+      '[data-liters]'
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          'click',
+          () => {
+
+            fuel.value =
+              button.dataset.liters;
+
+            calculate();
+
+          }
+        );
+
+      }
+    );
+
+
+  /* Snabbval olja */
+
+
+  document
+    .querySelectorAll(
+      '[data-oil]'
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          'click',
+          () => {
+
+            oilInput.value =
+              button.dataset.oil;
+
+            calculate();
+
+          }
+        );
+
+      }
+    );
+
+
+  /* Uppdatera direkt när man skriver */
+
+
+  [
+    fuel,
+    oilInput,
+    mixValue,
+    existingMix,
+    currentCorrection,
+    targetCorrection
+  ]
+  .forEach(
+    input => {
+
+      input.addEventListener(
+        'input',
+        calculate
+      );
+
+    }
+  );
+
+
+  calculate();
+
+</script>
+
 </body>
 </html>
