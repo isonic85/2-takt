@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#101820" />
   <title>2‑T Oljeblandning</title>
-<link rel="apple-touch-icon" sizes="512x512" href="2t-icon-512.png" />
-  <link rel="icon" type="image/png" sizes="512x512" href="2t-icon-512.png" />
+<link rel="apple-touch-icon" sizes="512x512" href="2t-icon-512(1).png">
+<link rel="icon" type="image/png" sizes="512x512" href="2t-icon-512(1).png">
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="2-T Blandning" />
@@ -236,6 +236,12 @@
       text-align:center;
     }
 
+
+    .mode-switch,.mix-switch{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:18px;}
+    .mode-btn,.mix-btn{border:1px solid var(--border);background:var(--card-2);color:var(--text);border-radius:14px;padding:10px 8px;font-weight:800;cursor:pointer;}
+    .mode-btn.active,.mix-btn.active{background:var(--accent);color:#1a1205;border-color:var(--accent);}
+    .hidden{display:none !important;}
+
     @media (max-width:430px){
       body{padding:16px}
       .card{padding:16px; border-radius:20px}
@@ -253,46 +259,48 @@
     </section>
 
     <section class="card">
-      <div class="field">
+      <div class="mode-switch" aria-label="Välj beräkningssätt">
+        <button type="button" class="mode-btn active" data-mode="fuel-to-oil">Bensin → olja</button>
+        <button type="button" class="mode-btn" data-mode="oil-to-fuel">Olja → bensin</button>
+      </div>
+
+      <div class="field" id="fuelField">
         <label for="fuel">Mängd bensin</label>
-        <div class="input-wrap">
-          <input id="fuel" type="number" inputmode="decimal" min="0" step="0.1" value="5" aria-label="Mängd bensin i liter">
-          <span class="unit">liter</span>
-        </div>
+        <div class="input-wrap"><input id="fuel" type="number" inputmode="decimal" min="0" step="0.1" value="5"><span class="unit">liter</span></div>
+      </div>
+
+      <div class="field hidden" id="oilInputField">
+        <label for="oilInput">Mängd 2‑taktsolja</label>
+        <div class="input-wrap"><input id="oilInput" type="number" inputmode="decimal" min="0" step="1" value="100"><span class="unit">ml</span></div>
+      </div>
+
+      <div class="mix-switch" aria-label="Välj blandningsformat">
+        <button type="button" class="mix-btn active" data-mix="percent">Procent %</button>
+        <button type="button" class="mix-btn" data-mix="ratio">Förhållande 1:X</button>
       </div>
 
       <div class="field">
-        <label for="percent">Oljeblandning</label>
-        <div class="input-wrap">
-          <input id="percent" type="number" inputmode="decimal" min="0.1" max="20" step="0.1" value="2" aria-label="Oljeprocent">
-          <span class="unit">%</span>
+        <label for="mixValue" id="mixLabel">Oljeblandning</label>
+        <div class="input-wrap"><input id="mixValue" type="number" inputmode="decimal" min="0.1" step="0.1" value="2"><span class="unit" id="mixUnit">%</span></div>
+        <div class="presets" id="percentPresets">
+          <button class="preset" data-pct="1">1 %</button><button class="preset active" data-pct="2">2 %</button><button class="preset" data-pct="2.5">2,5 %</button><button class="preset" data-pct="3">3 %</button><button class="preset" data-pct="4">4 %</button>
         </div>
-
-        <div class="presets" aria-label="Snabbval för oljeprocent">
-          <button class="preset" data-pct="1">1 %</button>
-          <button class="preset active" data-pct="2">2 %</button>
-          <button class="preset" data-pct="2.5">2,5 %</button>
-          <button class="preset" data-pct="3">3 %</button>
-          <button class="preset" data-pct="4">4 %</button>
+        <div class="presets hidden" id="ratioPresets">
+          <button class="preset" data-ratio="100">1:100</button><button class="preset active" data-ratio="50">1:50</button><button class="preset" data-ratio="40">1:40</button><button class="preset" data-ratio="33.3">1:33</button><button class="preset" data-ratio="25">1:25</button>
         </div>
       </div>
 
       <div class="result" aria-live="polite">
-        <div class="result-label">Tillsätt 2‑taktsolja</div>
-        <div class="result-main">
-          <div class="result-number" id="oil">100</div>
-          <div class="result-unit">ml</div>
-        </div>
-        <div class="mixline" id="details">
-          5 liter bensin + 100 ml olja · <span class="ratio">ca 1:50</span>
-        </div>
+        <div class="result-label" id="resultLabel">Tillsätt 2‑taktsolja</div>
+        <div class="result-main"><div class="result-number" id="resultNumber">100</div><div class="result-unit" id="resultUnit">ml</div></div>
+        <div class="mixline" id="details"></div>
       </div>
 
-      <div class="examples" aria-label="Snabbval för bensinmängd">
-        <button class="example" data-liters="5"><strong>5 L</strong><span>snabbval</span></button>
-        <button class="example" data-liters="10"><strong>10 L</strong><span>snabbval</span></button>
-        <button class="example" data-liters="20"><strong>20 L</strong><span>snabbval</span></button>
-        <button class="example" data-liters="22.5"><strong>22.5 L</strong><span>snabbval</span></button>
+      <div class="examples" id="fuelExamples">
+        <button class="example" data-liters="5"><strong>5 L</strong><span>snabbval</span></button><button class="example" data-liters="10"><strong>10 L</strong><span>snabbval</span></button><button class="example" data-liters="20"><strong>20 L</strong><span>snabbval</span></button><button class="example" data-liters="22.5"><strong>22,5 L</strong><span>snabbval</span></button>
+      </div>
+      <div class="examples hidden" id="oilExamples">
+        <button class="example" data-oil="50"><strong>50 ml</strong><span>snabbval</span></button><button class="example" data-oil="100"><strong>100 ml</strong><span>snabbval</span></button><button class="example" data-oil="250"><strong>250 ml</strong><span>snabbval</span></button><button class="example" data-oil="500"><strong>500 ml</strong><span>snabbval</span></button>
       </div>
 
       <p class="note">Följ alltid motortillverkarens rekommenderade blandningsförhållande. Vissa moderna motorer kräver annan oljeprocent.</p>
@@ -300,54 +308,18 @@
   </main>
 
   <script>
-    const fuelInput = document.getElementById('fuel');
-    const percentInput = document.getElementById('percent');
-    const oilEl = document.getElementById('oil');
-    const detailsEl = document.getElementById('details');
-    const presetButtons = [...document.querySelectorAll('.preset')];
-    const exampleButtons = [...document.querySelectorAll('.example')];
-
-    function fmt(value, maxDecimals = 2) {
-      return new Intl.NumberFormat('sv-SE', {
-        maximumFractionDigits: maxDecimals
-      }).format(value);
-    }
-
-    function calculate() {
-      const liters = Math.max(0, parseFloat(fuelInput.value) || 0);
-      const percent = Math.max(0, parseFloat(percentInput.value) || 0);
-
-      const oilMl = liters * 1000 * (percent / 100);
-      const ratio = percent > 0 ? 100 / percent : 0;
-
-      oilEl.textContent = fmt(oilMl, oilMl < 10 ? 1 : 0);
-      detailsEl.innerHTML =
-        `${fmt(liters)} liter bensin + ${fmt(oilMl, oilMl < 10 ? 1 : 0)} ml olja` +
-        (ratio ? ` · <span class="ratio">ca 1:${fmt(ratio, 1)}</span>` : '');
-
-      presetButtons.forEach(btn => {
-        btn.classList.toggle('active', Number(btn.dataset.pct) === Number(percent));
-      });
-    }
-
-    fuelInput.addEventListener('input', calculate);
-    percentInput.addEventListener('input', calculate);
-
-    presetButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        percentInput.value = btn.dataset.pct;
-        calculate();
-      });
-    });
-
-    exampleButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        fuelInput.value = btn.dataset.liters;
-        calculate();
-      });
-    });
-
-    calculate();
+    const $=id=>document.getElementById(id), fuel=$('fuel'), oilInput=$('oilInput'), mixValue=$('mixValue');
+    let direction='fuel-to-oil', mixMode='percent';
+    function fmt(n,d=2){return new Intl.NumberFormat('sv-SE',{maximumFractionDigits:d}).format(n)}
+    function currentPercent(){const v=Math.max(0,parseFloat(mixValue.value)||0);return mixMode==='ratio'?(v?100/v:0):v}
+    function calc(){const p=currentPercent(),r=p?100/p:0;if(direction==='fuel-to-oil'){const l=Math.max(0,parseFloat(fuel.value)||0),ml=l*10*p;$('resultLabel').textContent='Tillsätt 2‑taktsolja';$('resultNumber').textContent=fmt(ml,ml<10?1:0);$('resultUnit').textContent='ml';$('details').innerHTML=`${fmt(l)} liter bensin + ${fmt(ml,ml<10?1:0)} ml olja`+(r?` · <span class="ratio">ca 1:${fmt(r,1)}</span>`:'')}else{const ml=Math.max(0,parseFloat(oilInput.value)||0),l=p?ml/(10*p):0;$('resultLabel').textContent='Oljan räcker till';$('resultNumber').textContent=fmt(l,2);$('resultUnit').textContent='liter bensin';$('details').innerHTML=`${fmt(ml)} ml olja räcker till ${fmt(l,2)} liter bensin`+(r?` · <span class="ratio">ca 1:${fmt(r,1)}</span>`:'')}}
+    document.querySelectorAll('.mode-btn').forEach(btn=>btn.addEventListener('click',()=>{direction=btn.dataset.mode;document.querySelectorAll('.mode-btn').forEach(b=>b.classList.toggle('active',b===btn));const rev=direction==='oil-to-fuel';$('fuelField').classList.toggle('hidden',rev);$('fuelExamples').classList.toggle('hidden',rev);$('oilInputField').classList.toggle('hidden',!rev);$('oilExamples').classList.toggle('hidden',!rev);calc()}));
+    document.querySelectorAll('.mix-btn').forEach(btn=>btn.addEventListener('click',()=>{if(btn.dataset.mix===mixMode)return;const oldPct=currentPercent();mixMode=btn.dataset.mix;document.querySelectorAll('.mix-btn').forEach(b=>b.classList.toggle('active',b===btn));if(mixMode==='ratio'){mixValue.value=oldPct?(100/oldPct).toFixed(1).replace('.0',''):'50';$('mixLabel').textContent='Blandningsförhållande';$('mixUnit').textContent='1:X';$('percentPresets').classList.add('hidden');$('ratioPresets').classList.remove('hidden')}else{const rv=Math.max(0,parseFloat(mixValue.value)||0);mixValue.value=rv?(100/rv).toFixed(2).replace(/0+$/,'').replace(/\.$/,''):'2';$('mixLabel').textContent='Oljeblandning';$('mixUnit').textContent='%';$('ratioPresets').classList.add('hidden');$('percentPresets').classList.remove('hidden')}calc()}));
+    document.querySelectorAll('[data-pct]').forEach(btn=>btn.addEventListener('click',()=>{mixValue.value=btn.dataset.pct;calc()}));
+    document.querySelectorAll('[data-ratio]').forEach(btn=>btn.addEventListener('click',()=>{mixValue.value=btn.dataset.ratio;calc()}));
+    document.querySelectorAll('[data-liters]').forEach(btn=>btn.addEventListener('click',()=>{fuel.value=btn.dataset.liters;calc()}));
+    document.querySelectorAll('[data-oil]').forEach(btn=>btn.addEventListener('click',()=>{oilInput.value=btn.dataset.oil;calc()}));
+    [fuel,oilInput,mixValue].forEach(el=>el.addEventListener('input',calc));calc();
   </script>
 </body>
 </html>
