@@ -5,26 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#101820">
 
-  <title>2-T Oljeblandning</title>
+  <title>2-T Assistent</title>
 
   <link rel="apple-touch-icon" href="2t-icon-512.png">
   <link rel="icon" type="image/png" href="2t-icon-512.png">
 
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="2-T Blandning">
+  <meta name="apple-mobile-web-app-title" content="2-T Assistent">
 
   <style>
     :root {
       --bg:#0b1117;
       --card:#121b24;
-      --card-2:#182431;
+      --card2:#182431;
       --text:#f4f7fb;
       --muted:#9fb0c2;
       --accent:#ff9f1c;
-      --accent-2:#ffd166;
+      --accent2:#ffd166;
       --ok:#42d392;
       --border:#263748;
+      --danger:#ff7676;
       --shadow:0 18px 45px rgba(0,0,0,.28);
     }
 
@@ -39,8 +40,15 @@
     body {
       margin:0;
       min-height:100vh;
-      font-family:Inter, ui-sans-serif, system-ui, -apple-system,
-        BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
 
       background:
         radial-gradient(
@@ -50,30 +58,27 @@
         ),
         linear-gradient(
           180deg,
-          #0b1117 0%,
-          #091017 100%
+          #0b1117,
+          #091017
         );
 
       color:var(--text);
 
-      display:grid;
-      place-items:center;
-
-      padding:24px;
+      padding:20px;
     }
 
     .app {
-      width:min(100%, 560px);
+      width:min(100%,620px);
+      margin:auto;
     }
 
     .hero {
-      margin-bottom:18px;
+      text-align:center;
+      margin:6px 0 18px;
     }
 
     .eyebrow {
-      text-align:center;
-
-      color:var(--accent-2);
+      color:var(--accent2);
 
       font-size:.78rem;
       font-weight:800;
@@ -85,8 +90,6 @@
     }
 
     h1 {
-      text-align:center;
-
       margin:0;
 
       font-size:clamp(2rem,7vw,3.25rem);
@@ -96,17 +99,72 @@
     }
 
     .subtitle {
-      text-align:center;
-
-      margin:12px 0 0;
+      margin:12px auto 0;
 
       color:var(--muted);
 
-      line-height:1.55;
+      line-height:1.5;
+
+      max-width:560px;
+    }
+
+    .top-tabs,
+    .mode-switch,
+    .mix-switch {
+      display:grid;
+
+      gap:8px;
+
+      margin-bottom:16px;
+    }
+
+    .top-tabs {
+      grid-template-columns:1fr 1fr;
+    }
+
+    .mode-switch {
+      grid-template-columns:repeat(3,1fr);
+    }
+
+    .mix-switch {
+      grid-template-columns:1fr 1fr;
+    }
+
+    button {
+      font:inherit;
+    }
+
+    .tab-btn,
+    .mode-btn,
+    .mix-btn,
+    .action-btn {
+      border:1px solid var(--border);
+
+      background:var(--card2);
+
+      color:var(--text);
+
+      border-radius:14px;
+
+      padding:10px 8px;
+
+      font-weight:800;
+
+      cursor:pointer;
+    }
+
+    .tab-btn.active,
+    .mode-btn.active,
+    .mix-btn.active {
+      background:var(--accent);
+
+      color:#1a1205;
+
+      border-color:var(--accent);
     }
 
     .card {
-      background:rgba(18,27,36,.92);
+      background:rgba(18,27,36,.94);
 
       border:1px solid var(--border);
       border-radius:24px;
@@ -145,21 +203,27 @@
       overflow:hidden;
     }
 
-    input {
+    input,
+    textarea {
       width:100%;
 
       border:0;
-      outline:none;
+      outline:0;
 
       background:transparent;
 
       color:var(--text);
 
       font:inherit;
-      font-size:1.35rem;
-      font-weight:800;
+      font-size:1.1rem;
+      font-weight:700;
 
-      padding:15px 16px;
+      padding:14px 16px;
+    }
+
+    textarea {
+      min-height:88px;
+      resize:vertical;
     }
 
     .unit {
@@ -171,88 +235,6 @@
 
       white-space:nowrap;
     }
-
-    button {
-      font:inherit;
-    }
-
-    /* Huvudlägen */
-
-    .mode-switch {
-      display:grid;
-
-      grid-template-columns:repeat(3,1fr);
-
-      gap:8px;
-
-      margin-bottom:18px;
-    }
-
-    .mode-btn {
-      border:1px solid var(--border);
-
-      background:var(--card-2);
-
-      color:var(--text);
-
-      border-radius:14px;
-
-      padding:10px 6px;
-
-      font-weight:800;
-
-      cursor:pointer;
-
-      transition:.18s ease;
-    }
-
-    .mode-btn.active {
-      background:var(--accent);
-
-      color:#1a1205;
-
-      border-color:var(--accent);
-    }
-
-    /* Procent / förhållande */
-
-    .mix-switch {
-      display:grid;
-
-      grid-template-columns:repeat(2,1fr);
-
-      gap:8px;
-
-      margin-bottom:18px;
-    }
-
-    .mix-btn {
-      border:1px solid var(--border);
-
-      background:var(--card-2);
-
-      color:var(--text);
-
-      border-radius:14px;
-
-      padding:10px 8px;
-
-      font-weight:800;
-
-      cursor:pointer;
-
-      transition:.18s ease;
-    }
-
-    .mix-btn.active {
-      background:var(--accent);
-
-      color:#1a1205;
-
-      border-color:var(--accent);
-    }
-
-    /* Snabbval */
 
     .presets {
       display:grid;
@@ -267,7 +249,7 @@
     .preset {
       border:1px solid var(--border);
 
-      background:var(--card-2);
+      background:var(--card2);
 
       color:var(--text);
 
@@ -278,14 +260,6 @@
       font-weight:800;
 
       cursor:pointer;
-
-      transition:.18s ease;
-    }
-
-    .preset:hover {
-      transform:translateY(-1px);
-
-      border-color:#3b5269;
     }
 
     .preset.active {
@@ -296,12 +270,10 @@
       border-color:var(--accent);
     }
 
-    /* Resultat */
-
     .result {
       text-align:center;
 
-      margin-top:20px;
+      margin-top:18px;
 
       border-radius:20px;
 
@@ -339,7 +311,7 @@
     }
 
     .result-number {
-      font-size:clamp(3rem,13vw,5.4rem);
+      font-size:clamp(3rem,13vw,5.2rem);
 
       line-height:.95;
 
@@ -347,11 +319,11 @@
 
       letter-spacing:-.06em;
 
-      color:var(--accent-2);
+      color:var(--accent2);
     }
 
     .result-unit {
-      font-size:1.35rem;
+      font-size:1.25rem;
 
       font-weight:850;
 
@@ -374,10 +346,8 @@
       font-weight:850;
     }
 
-    /* Snabbval mängd */
-
     .examples {
-      margin-top:16px;
+      margin-top:14px;
 
       display:grid;
 
@@ -392,31 +362,23 @@
       border:1px solid var(--border);
       border-radius:14px;
 
-      padding:4px;
+      padding:5px;
 
       text-align:center;
+
+      color:var(--text);
 
       cursor:pointer;
     }
 
     .example strong {
       display:block;
-
-      color:var(--text);
-
-      font-size:1rem;
     }
 
     .example span {
       color:var(--muted);
 
-      font-size:.78rem;
-    }
-
-    /* Korrigering */
-
-    .correction-format {
-      margin-bottom:18px;
+      font-size:.72rem;
     }
 
     .correction-grid {
@@ -427,35 +389,173 @@
       gap:10px;
     }
 
-    .correction-help {
+    .note,
+    .small {
       color:var(--muted);
 
-      font-size:.8rem;
+      font-size:.79rem;
 
       line-height:1.5;
-
-      margin:-5px 0 16px;
     }
 
     .hidden {
       display:none !important;
     }
 
-    .note {
+    /* HITTA OLJA */
+
+    .finder-title {
+      margin:0 0 6px;
+
+      font-size:1.45rem;
+    }
+
+    .finder-intro {
       color:var(--muted);
 
-      font-size:.78rem;
+      line-height:1.5;
+
+      margin:0 0 18px;
+    }
+
+    .camera-box {
+      border:1px dashed #40566b;
+
+      background:#0d151d;
+
+      border-radius:18px;
+
+      padding:14px;
+
+      margin-bottom:18px;
+    }
+
+    .camera-row {
+      display:flex;
+
+      gap:10px;
+
+      align-items:center;
+    }
+
+    .camera-label {
+      display:inline-flex;
+
+      align-items:center;
+      justify-content:center;
+
+      flex:1;
+
+      border:1px solid var(--border);
+
+      background:var(--card2);
+
+      border-radius:14px;
+
+      min-height:48px;
+
+      padding:10px;
+
+      font-weight:800;
+
+      cursor:pointer;
+    }
+
+    #oilPhoto {
+      position:absolute;
+
+      opacity:0;
+
+      pointer-events:none;
+
+      width:1px;
+      height:1px;
+    }
+
+    #photoPreview {
+      display:none;
+
+      width:100%;
+
+      max-height:260px;
+
+      object-fit:contain;
+
+      border-radius:14px;
+
+      margin-top:12px;
+
+      background:#091017;
+    }
+
+    .status {
+      border:1px solid var(--border);
+
+      background:#0d151d;
+
+      border-radius:14px;
+
+      padding:11px 13px;
+
+      color:var(--muted);
+
+      font-size:.86rem;
 
       line-height:1.45;
 
-      margin:15px 2px 0;
-
-      text-align:center;
+      margin-bottom:12px;
     }
 
-    @media (max-width:430px) {
+    .status.ok {
+      border-color:rgba(66,211,146,.45);
+
+      color:#bcefd6;
+    }
+
+    .actions {
+      display:grid;
+
+      grid-template-columns:1fr 1fr;
+
+      gap:10px;
+
+      margin-top:14px;
+    }
+
+    .action-btn.primary {
+      background:var(--accent);
+
+      color:#1a1205;
+
+      border-color:var(--accent);
+    }
+
+    .action-btn.secondary {
+      background:#1b2b39;
+    }
+
+    .search-tip {
+      margin-top:15px;
+
+      padding:13px;
+
+      border-radius:14px;
+
+      background:rgba(255,209,102,.06);
+
+      border:1px solid rgba(255,209,102,.18);
+
+      color:#d5c9aa;
+
+      font-size:.8rem;
+
+      line-height:1.5;
+    }
+
+    @media(max-width:430px) {
+
       body {
-        padding:16px;
+        padding:14px;
       }
 
       .card {
@@ -465,25 +565,26 @@
       }
 
       .mode-btn {
-        font-size:.78rem;
+        font-size:.74rem;
 
-        padding:10px 3px;
-      }
-
-      .presets {
-        grid-template-columns:repeat(5,minmax(0,1fr));
+        padding:9px 3px;
       }
 
       .preset {
-        font-size:.78rem;
+        font-size:.76rem;
+
+        padding:6px 2px;
       }
 
-      .correction-grid {
+      .correction-grid,
+      .actions {
         grid-template-columns:1fr;
       }
+
     }
   </style>
 </head>
+
 
 <body>
 
@@ -492,33 +593,52 @@
   <section class="hero">
 
     <div class="eyebrow">
-      Bensin + 2-taktsolja
+      2-T VERKTYG
     </div>
 
     <h1>
-      2-T Oljeblandning
+      2-T Assistent
     </h1>
 
     <p class="subtitle">
-      Räkna ut rätt mängd 2-taktsolja,
-      omvänd blandning eller korrigera en
-      redan blandad dunk.
+      Blanda rätt, korrigera en befintlig blandning
+      och hitta 2-taktsolja nära dig.
     </p>
 
   </section>
 
 
-  <section class="card">
+  <!-- HUVUDFLIKAR -->
 
-    <!-- Huvudlägen -->
+  <div class="top-tabs">
 
-    <div
-      class="mode-switch"
-      aria-label="Välj beräkningssätt"
+    <button
+      class="tab-btn active"
+      data-tab="calculator"
     >
+      Kalkylator
+    </button>
+
+    <button
+      class="tab-btn"
+      data-tab="finder"
+    >
+      Hitta olja
+    </button>
+
+  </div>
+
+
+  <!-- KALKYLATOR -->
+
+  <section
+    class="card"
+    id="calculatorTab"
+  >
+
+    <div class="mode-switch">
 
       <button
-        type="button"
         class="mode-btn active"
         data-mode="fuel-to-oil"
       >
@@ -526,7 +646,6 @@
       </button>
 
       <button
-        type="button"
         class="mode-btn"
         data-mode="oil-to-fuel"
       >
@@ -534,7 +653,6 @@
       </button>
 
       <button
-        type="button"
         class="mode-btn"
         data-mode="correct"
       >
@@ -544,69 +662,213 @@
     </div>
 
 
-    <!-- Bensin -->
+    <div id="normalFields">
 
-    <div
-      class="field"
-      id="fuelField"
-    >
+      <!-- BENSIN -->
 
-      <label for="fuel">
-        Mängd bensin
-      </label>
+      <div
+        class="field"
+        id="fuelField"
+      >
 
-      <div class="input-wrap">
+        <label for="fuel">
+          Mängd bensin
+        </label>
 
-        <input
-          id="fuel"
-          type="number"
-          inputmode="decimal"
-          min="0"
-          step="0.1"
-          value="5"
+        <div class="input-wrap">
+
+          <input
+            id="fuel"
+            type="number"
+            min="0"
+            step="0.1"
+            value="5"
+          >
+
+          <span class="unit">
+            liter
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- OLJA -->
+
+      <div
+        class="field hidden"
+        id="oilInputField"
+      >
+
+        <label for="oilInput">
+          Mängd 2-taktsolja
+        </label>
+
+        <div class="input-wrap">
+
+          <input
+            id="oilInput"
+            type="number"
+            min="0"
+            step="1"
+            value="100"
+          >
+
+          <span class="unit">
+            ml
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- PROCENT / FÖRHÅLLANDE -->
+
+      <div class="mix-switch">
+
+        <button
+          class="mix-btn active"
+          data-mix="percent"
+        >
+          Procent %
+        </button>
+
+        <button
+          class="mix-btn"
+          data-mix="ratio"
+        >
+          Förhållande 1:X
+        </button>
+
+      </div>
+
+
+      <div class="field">
+
+        <label
+          id="mixLabel"
+          for="mixValue"
+        >
+          Oljeblandning
+        </label>
+
+        <div class="input-wrap">
+
+          <input
+            id="mixValue"
+            type="number"
+            min="0.1"
+            step="0.1"
+            value="2"
+          >
+
+          <span
+            class="unit"
+            id="mixUnit"
+          >
+            %
+          </span>
+
+        </div>
+
+
+        <!-- PROCENT SNABBVAL -->
+
+        <div
+          class="presets"
+          id="percentPresets"
         >
 
-        <span class="unit">
-          liter
-        </span>
+          <button
+            class="preset"
+            data-pct="1"
+          >
+            1 %
+          </button>
+
+          <button
+            class="preset active"
+            data-pct="2"
+          >
+            2 %
+          </button>
+
+          <button
+            class="preset"
+            data-pct="2.5"
+          >
+            2,5 %
+          </button>
+
+          <button
+            class="preset"
+            data-pct="3"
+          >
+            3 %
+          </button>
+
+          <button
+            class="preset"
+            data-pct="4"
+          >
+            4 %
+          </button>
+
+        </div>
+
+
+        <!-- FÖRHÅLLANDE SNABBVAL -->
+
+        <div
+          class="presets hidden"
+          id="ratioPresets"
+        >
+
+          <button
+            class="preset"
+            data-ratio="100"
+          >
+            1:100
+          </button>
+
+          <button
+            class="preset active"
+            data-ratio="50"
+          >
+            1:50
+          </button>
+
+          <button
+            class="preset"
+            data-ratio="40"
+          >
+            1:40
+          </button>
+
+          <button
+            class="preset"
+            data-ratio="33.3"
+          >
+            1:33
+          </button>
+
+          <button
+            class="preset"
+            data-ratio="25"
+          >
+            1:25
+          </button>
+
+        </div>
 
       </div>
 
     </div>
 
 
-    <!-- Olja för omvänd kalkyl -->
-
-    <div
-      class="field hidden"
-      id="oilInputField"
-    >
-
-      <label for="oilInput">
-        Mängd 2-taktsolja
-      </label>
-
-      <div class="input-wrap">
-
-        <input
-          id="oilInput"
-          type="number"
-          inputmode="decimal"
-          min="0"
-          step="1"
-          value="100"
-        >
-
-        <span class="unit">
-          ml
-        </span>
-
-      </div>
-
-    </div>
-
-
-    <!-- Korrigering -->
+    <!-- KORRIGERING -->
 
     <div
       id="correctionFields"
@@ -624,7 +886,6 @@
           <input
             id="existingMix"
             type="number"
-            inputmode="decimal"
             min="0"
             step="0.1"
             value="10"
@@ -639,54 +900,25 @@
       </div>
 
 
-      <div class="correction-format">
-
-        <div class="mix-switch">
-
-          <button
-            type="button"
-            class="mix-btn correction-mix-btn active"
-            data-correction-format="percent"
-          >
-            Procent %
-          </button>
-
-          <button
-            type="button"
-            class="mix-btn correction-mix-btn"
-            data-correction-format="ratio"
-          >
-            Förhållande 1:X
-          </button>
-
-        </div>
-
-      </div>
-
-
       <div class="correction-grid">
 
         <div class="field">
 
-          <label for="currentCorrection">
+          <label for="currentPct">
             Nuvarande blandning
           </label>
 
           <div class="input-wrap">
 
             <input
-              id="currentCorrection"
+              id="currentPct"
               type="number"
-              inputmode="decimal"
               min="0.1"
               step="0.1"
               value="1"
             >
 
-            <span
-              class="unit"
-              id="currentCorrectionUnit"
-            >
+            <span class="unit">
               %
             </span>
 
@@ -697,25 +929,21 @@
 
         <div class="field">
 
-          <label for="targetCorrection">
+          <label for="targetPct">
             Önskad blandning
           </label>
 
           <div class="input-wrap">
 
             <input
-              id="targetCorrection"
+              id="targetPct"
               type="number"
-              inputmode="decimal"
               min="0.1"
               step="0.1"
               value="2"
             >
 
-            <span
-              class="unit"
-              id="targetCorrectionUnit"
-            >
+            <span class="unit">
               %
             </span>
 
@@ -726,177 +954,17 @@
       </div>
 
 
-      <div class="correction-help">
-
-        Är blandningen för mager räknar appen ut
-        hur mycket olja som ska tillsättas.
-        Är den för fet räknar den ut hur mycket
-        bensin som behövs.
-
-      </div>
+      <p class="small">
+        För mager blandning → extra olja.
+        För fet blandning → extra bensin.
+      </p>
 
     </div>
 
 
-    <!-- Blandningsformat vanliga lägen -->
+    <!-- RESULTAT -->
 
-    <div
-      class="mix-switch"
-      id="normalMixSwitch"
-    >
-
-      <button
-        type="button"
-        class="mix-btn normal-mix-btn active"
-        data-mix="percent"
-      >
-        Procent %
-      </button>
-
-      <button
-        type="button"
-        class="mix-btn normal-mix-btn"
-        data-mix="ratio"
-      >
-        Förhållande 1:X
-      </button>
-
-    </div>
-
-
-    <!-- Blandningsvärde -->
-
-    <div
-      class="field"
-      id="normalMixField"
-    >
-
-      <label
-        for="mixValue"
-        id="mixLabel"
-      >
-        Oljeblandning
-      </label>
-
-      <div class="input-wrap">
-
-        <input
-          id="mixValue"
-          type="number"
-          inputmode="decimal"
-          min="0.1"
-          step="0.1"
-          value="2"
-        >
-
-        <span
-          class="unit"
-          id="mixUnit"
-        >
-          %
-        </span>
-
-      </div>
-
-
-      <!-- Procent snabbval -->
-
-      <div
-        class="presets"
-        id="percentPresets"
-      >
-
-        <button
-          class="preset"
-          data-pct="1"
-        >
-          1 %
-        </button>
-
-        <button
-          class="preset active"
-          data-pct="2"
-        >
-          2 %
-        </button>
-
-        <button
-          class="preset"
-          data-pct="2.5"
-        >
-          2,5 %
-        </button>
-
-        <button
-          class="preset"
-          data-pct="3"
-        >
-          3 %
-        </button>
-
-        <button
-          class="preset"
-          data-pct="4"
-        >
-          4 %
-        </button>
-
-      </div>
-
-
-      <!-- Förhållande snabbval -->
-
-      <div
-        class="presets hidden"
-        id="ratioPresets"
-      >
-
-        <button
-          class="preset"
-          data-ratio="100"
-        >
-          1:100
-        </button>
-
-        <button
-          class="preset active"
-          data-ratio="50"
-        >
-          1:50
-        </button>
-
-        <button
-          class="preset"
-          data-ratio="40"
-        >
-          1:40
-        </button>
-
-        <button
-          class="preset"
-          data-ratio="33.3"
-        >
-          1:33
-        </button>
-
-        <button
-          class="preset"
-          data-ratio="25"
-        >
-          1:25
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <!-- Resultat -->
-
-    <div
-      class="result"
-      aria-live="polite"
-    >
+    <div class="result">
 
       <div
         class="result-label"
@@ -931,7 +999,7 @@
     </div>
 
 
-    <!-- Bensin snabbval -->
+    <!-- BENSIN SNABBVAL -->
 
     <div
       class="examples"
@@ -973,7 +1041,7 @@
     </div>
 
 
-    <!-- Olja snabbval -->
+    <!-- OLJA SNABBVAL -->
 
     <div
       class="examples hidden"
@@ -1016,9 +1084,165 @@
 
 
     <p class="note">
-      Följ alltid motortillverkarens
-      rekommenderade blandningsförhållande.
+      Följ alltid motortillverkarens rekommenderade
+      blandningsförhållande och oljespecifikation.
     </p>
+
+  </section>
+
+
+  <!-- HITTA OLJA -->
+
+  <section
+    class="card hidden"
+    id="finderTab"
+  >
+
+    <h2 class="finder-title">
+      Hitta 2-taktsolja nära dig
+    </h2>
+
+    <p class="finder-intro">
+      Skriv produktnamnet eller fotografera flaskan.
+      Den här första versionen använder produkten
+      eller specifikationen för att öppna en lokal
+      butikssökning.
+    </p>
+
+
+    <!-- KAMERA -->
+
+    <div class="camera-box">
+
+      <div class="camera-row">
+
+        <label
+          class="camera-label"
+          for="oilPhoto"
+        >
+          📷 Ta bild / välj bild
+        </label>
+
+        <input
+          id="oilPhoto"
+          type="file"
+          accept="image/*"
+          capture="environment"
+        >
+
+      </div>
+
+
+      <img
+        id="photoPreview"
+        alt="Förhandsvisning av oljeflaska"
+      >
+
+
+      <p
+        class="small"
+        id="photoInfo"
+      >
+        Bildidentifiering med AI kopplas in i nästa steg.
+        Du kan redan nu använda kameran som referens
+        och skriva av etiketten.
+      </p>
+
+    </div>
+
+
+    <!-- PRODUKTNAMN -->
+
+    <div class="field">
+
+      <label for="productName">
+        Produkt / olja
+      </label>
+
+      <div class="input-wrap">
+
+        <input
+          id="productName"
+          type="text"
+          placeholder="T.ex. Husqvarna XP Synthetic 2T"
+        >
+
+      </div>
+
+    </div>
+
+
+    <!-- SPECIFIKATION -->
+
+    <div class="field">
+
+      <label for="oilSpecs">
+        Specifikation / ersättningskrav
+      </label>
+
+      <div class="input-wrap">
+
+        <input
+          id="oilSpecs"
+          type="text"
+          placeholder="T.ex. JASO FD, ISO-L-EGD, API TC"
+        >
+
+      </div>
+
+    </div>
+
+
+    <!-- POSITION -->
+
+    <div
+      class="status"
+      id="locationStatus"
+    >
+      Position är inte hämtad ännu.
+    </div>
+
+
+    <button
+      class="action-btn secondary"
+      id="locationBtn"
+      style="width:100%"
+    >
+      📍 Använd min position
+    </button>
+
+
+    <!-- SÖKKNAPPAR -->
+
+    <div class="actions">
+
+      <button
+        class="action-btn primary"
+        id="sameBtn"
+      >
+        Hitta samma nära mig
+      </button>
+
+      <button
+        class="action-btn secondary"
+        id="replaceBtn"
+      >
+        Hitta ersättare
+      </button>
+
+    </div>
+
+
+    <div class="search-tip">
+
+      <strong>Tips:</strong>
+
+      För ersättare är specifikationen viktigare
+      än bara märket. Kontrollera alltid att
+      ersättningsoljan uppfyller kraven för din
+      motor innan användning.
+
+    </div>
 
   </section>
 
@@ -1027,37 +1251,21 @@
 
 <script>
 
-  const $ = id =>
-    document.getElementById(id);
-
-
-  const fuel =
-    $('fuel');
-
-  const oilInput =
-    $('oilInput');
-
-  const mixValue =
-    $('mixValue');
-
-  const existingMix =
-    $('existingMix');
-
-  const currentCorrection =
-    $('currentCorrection');
-
-  const targetCorrection =
-    $('targetCorrection');
+  const $ =
+    id =>
+      document.getElementById(id);
 
 
   let direction =
     'fuel-to-oil';
 
+
   let mixMode =
     'percent';
 
-  let correctionFormat =
-    'percent';
+
+  let userCoords =
+    null;
 
 
   function fmt(
@@ -1080,53 +1288,263 @@
     const value =
       Math.max(
         0,
-        parseFloat(mixValue.value) || 0
+        parseFloat(
+          $('mixValue').value
+        ) || 0
       );
 
-    if (
-      mixMode === 'ratio'
-    ) {
 
-      return value
-        ? 100 / value
-        : 0;
+    return mixMode === 'ratio'
 
-    }
+      ? (
+          value
+            ? 100 / value
+            : 0
+        )
 
-    return value;
+      : value;
 
   }
 
 
-  function correctionPercent(
-    value
-  ) {
+  function calculate() {
 
-    value =
-      Math.max(
-        0,
-        parseFloat(value) || 0
-      );
+
+    /* KORRIGERING */
 
     if (
-      correctionFormat === 'ratio'
+      direction === 'correct'
     ) {
 
-      return value
-        ? 100 / value
-        : 0;
+      const total =
+        Math.max(
+          0,
+          parseFloat(
+            $('existingMix').value
+          ) || 0
+        );
+
+
+      const current =
+        Math.max(
+          0,
+          parseFloat(
+            $('currentPct').value
+          ) || 0
+        );
+
+
+      const target =
+        Math.max(
+          0,
+          parseFloat(
+            $('targetPct').value
+          ) || 0
+        );
+
+
+      if (
+        !total ||
+        !current ||
+        !target
+      ) {
+
+        $('resultLabel').textContent =
+          'Korrigering';
+
+        $('resultNumber').textContent =
+          '0';
+
+        $('resultUnit').textContent =
+          '';
+
+        $('details').textContent =
+          'Fyll i giltiga värden.';
+
+        return;
+
+      }
+
+
+      /*
+        2 % betyder:
+
+        20 ml olja
+        per 1 liter bensin
+
+        alltså 1:50
+      */
+
+
+      const currentRatio =
+        current / 100;
+
+
+      const fuelLiters =
+        total /
+        (
+          1 +
+          currentRatio
+        );
+
+
+      const oilLiters =
+        total -
+        fuelLiters;
+
+
+      /* REDAN RÄTT */
+
+      if (
+        Math.abs(
+          current -
+          target
+        ) < 0.000001
+      ) {
+
+        $('resultLabel').textContent =
+          'Blandningen är redan rätt';
+
+        $('resultNumber').textContent =
+          '0';
+
+        $('resultUnit').textContent =
+          'ml';
+
+
+        $('details').innerHTML =
+
+          `${fmt(total)} liter är redan ` +
+
+          `${fmt(target)} % · ` +
+
+          `<span class="ratio">` +
+
+          `1:${fmt(100 / target,1)}` +
+
+          `</span>`;
+
+      }
+
+
+      /* FÖR LITE OLJA */
+
+      else if (
+        target >
+        current
+      ) {
+
+        const targetOilLiters =
+
+          fuelLiters *
+          target /
+          100;
+
+
+        const addMl =
+
+          Math.max(
+            0,
+            (
+              targetOilLiters -
+              oilLiters
+            ) *
+            1000
+          );
+
+
+        $('resultLabel').textContent =
+          'Tillsätt olja';
+
+        $('resultNumber').textContent =
+          fmt(
+            addMl,
+            0
+          );
+
+        $('resultUnit').textContent =
+          'ml';
+
+
+        $('details').innerHTML =
+
+          `${fmt(total)} L från ` +
+
+          `${fmt(current)} % till ` +
+
+          `${fmt(target)} % · ` +
+
+          `<span class="ratio">` +
+
+          `mål 1:${fmt(100 / target,1)}` +
+
+          `</span>`;
+
+      }
+
+
+      /* FÖR MYCKET OLJA */
+
+      else {
+
+        const targetFuelLiters =
+
+          oilLiters /
+          (
+            target /
+            100
+          );
+
+
+        const addFuel =
+
+          Math.max(
+            0,
+            targetFuelLiters -
+            fuelLiters
+          );
+
+
+        $('resultLabel').textContent =
+          'Tillsätt bensin';
+
+        $('resultNumber').textContent =
+          fmt(
+            addFuel,
+            2
+          );
+
+        $('resultUnit').textContent =
+          'liter';
+
+
+        $('details').innerHTML =
+
+          `${fmt(total)} L från ` +
+
+          `${fmt(current)} % till ` +
+
+          `${fmt(target)} % · ` +
+
+          `<span class="ratio">` +
+
+          `mål 1:${fmt(100 / target,1)}` +
+
+          `</span>`;
+
+      }
+
+
+      return;
 
     }
 
-    return value;
 
-  }
-
-
-  function calculateNormal() {
+    /* VANLIG KALKYLATOR */
 
     const percent =
       currentPercent();
+
 
     const ratio =
       percent
@@ -1134,7 +1552,7 @@
         : 0;
 
 
-    /* Bensin → olja */
+    /* BENSIN → OLJA */
 
     if (
       direction === 'fuel-to-oil'
@@ -1143,24 +1561,31 @@
       const liters =
         Math.max(
           0,
-          parseFloat(fuel.value) || 0
+          parseFloat(
+            $('fuel').value
+          ) || 0
         );
 
+
       const oilMl =
+
         liters *
-        1000 *
-        percent /
-        100;
+        10 *
+        percent;
 
 
       $('resultLabel').textContent =
         'Tillsätt 2-taktsolja';
 
+
       $('resultNumber').textContent =
         fmt(
           oilMl,
-          oilMl < 10 ? 1 : 0
+          oilMl < 10
+            ? 1
+            : 0
         );
+
 
       $('resultUnit').textContent =
         'ml';
@@ -1172,7 +1597,9 @@
 
         `${fmt(
           oilMl,
-          oilMl < 10 ? 1 : 0
+          oilMl < 10
+            ? 1
+            : 0
         )} ml olja` +
 
         (
@@ -1186,36 +1613,42 @@
     }
 
 
-    /* Olja → bensin */
+    /* OLJA → BENSIN */
 
     else {
 
       const oilMl =
         Math.max(
           0,
-          parseFloat(oilInput.value) || 0
+          parseFloat(
+            $('oilInput').value
+          ) || 0
         );
 
 
       const liters =
+
         percent
+
           ? oilMl /
             (
-              1000 *
-              percent /
-              100
+              10 *
+              percent
             )
+
           : 0;
 
 
       $('resultLabel').textContent =
         'Oljan räcker till';
 
+
       $('resultNumber').textContent =
         fmt(
           liters,
           2
         );
+
 
       $('resultUnit').textContent =
         'liter bensin';
@@ -1240,245 +1673,56 @@
   }
 
 
-  function calculateCorrection() {
-
-    const totalLiters =
-      Math.max(
-        0,
-        parseFloat(existingMix.value) || 0
-      );
+  /* HUVUDFLIKAR */
 
 
-    const current =
-      correctionPercent(
-        currentCorrection.value
-      );
+  document
+    .querySelectorAll(
+      '.tab-btn'
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          'click',
+          () => {
+
+            document
+              .querySelectorAll(
+                '.tab-btn'
+              )
+              .forEach(
+                item =>
+                  item.classList.toggle(
+                    'active',
+                    item === button
+                  )
+              );
 
 
-    const target =
-      correctionPercent(
-        targetCorrection.value
-      );
+            $('calculatorTab')
+              .classList.toggle(
+                'hidden',
+                button.dataset.tab !==
+                'calculator'
+              );
 
 
-    if (
-      totalLiters <= 0 ||
-      current <= 0 ||
-      target <= 0
-    ) {
+            $('finderTab')
+              .classList.toggle(
+                'hidden',
+                button.dataset.tab !==
+                'finder'
+              );
 
-      $('resultLabel').textContent =
-        'Korrigering';
-
-      $('resultNumber').textContent =
-        '0';
-
-      $('resultUnit').textContent =
-        '';
-
-      $('details').textContent =
-        'Fyll i giltiga värden.';
-
-      return;
-
-    }
-
-
-    /*
-      Blandningsprocenten räknas
-      som mängd olja i förhållande
-      till mängd bensin.
-
-      Exempel:
-      2 % = 20 ml per liter bensin
-           = 1:50
-    */
-
-
-    const currentRatio =
-      current / 100;
-
-
-    /*
-      Befintlig blandning består av:
-
-      bensin + olja = total mängd
-
-      olja = bensin × currentRatio
-    */
-
-
-    const fuelLiters =
-      totalLiters /
-      (
-        1 +
-        currentRatio
-      );
-
-
-    const oilLiters =
-      totalLiters -
-      fuelLiters;
-
-
-    /* Redan korrekt */
-
-    if (
-      Math.abs(
-        current -
-        target
-      ) < 0.000001
-    ) {
-
-      $('resultLabel').textContent =
-        'Blandningen är redan rätt';
-
-      $('resultNumber').textContent =
-        '0';
-
-      $('resultUnit').textContent =
-        'ml';
-
-
-      $('details').innerHTML =
-
-        `${fmt(totalLiters)} liter är redan ` +
-
-        `${fmt(target,2)} %` +
-
-        ` · <span class="ratio">` +
-
-        `1:${fmt(100/target,1)}` +
-
-        `</span>`;
-
-      return;
-
-    }
-
-
-    /* För lite olja → tillsätt olja */
-
-    if (
-      target >
-      current
-    ) {
-
-      const targetOilLiters =
-        fuelLiters *
-        target /
-        100;
-
-
-      const extraOilLiters =
-        targetOilLiters -
-        oilLiters;
-
-
-      const extraOilMl =
-        extraOilLiters *
-        1000;
-
-
-      $('resultLabel').textContent =
-        'Tillsätt olja';
-
-      $('resultNumber').textContent =
-        fmt(
-          extraOilMl,
-          0
+          }
         );
 
-      $('resultUnit').textContent =
-        'ml';
+      }
+    );
 
 
-      $('details').innerHTML =
-
-        `${fmt(totalLiters)} L från ` +
-
-        `${fmt(current,2)} % till ` +
-
-        `${fmt(target,2)} %` +
-
-        ` · <span class="ratio">` +
-
-        `mål 1:${fmt(100/target,1)}` +
-
-        `</span>`;
-
-    }
-
-
-    /* För mycket olja → tillsätt bensin */
-
-    else {
-
-      const targetFuelLiters =
-        oilLiters /
-        (
-          target /
-          100
-        );
-
-
-      const extraFuelLiters =
-        targetFuelLiters -
-        fuelLiters;
-
-
-      $('resultLabel').textContent =
-        'Tillsätt bensin';
-
-      $('resultNumber').textContent =
-        fmt(
-          extraFuelLiters,
-          2
-        );
-
-      $('resultUnit').textContent =
-        'liter';
-
-
-      $('details').innerHTML =
-
-        `${fmt(totalLiters)} L från ` +
-
-        `${fmt(current,2)} % till ` +
-
-        `${fmt(target,2)} %` +
-
-        ` · <span class="ratio">` +
-
-        `mål 1:${fmt(100/target,1)}` +
-
-        `</span>`;
-
-    }
-
-  }
-
-
-  function calculate() {
-
-    if (
-      direction === 'correct'
-    ) {
-
-      calculateCorrection();
-
-    }
-
-    else {
-
-      calculateNormal();
-
-    }
-
-  }
-
-
-  /* Huvudläge */
+  /* KALKYLATORLÄGE */
 
 
   document
@@ -1510,28 +1754,35 @@
 
 
             const reverse =
+
               direction ===
               'oil-to-fuel';
 
 
-            const correction =
+            const correcting =
+
               direction ===
               'correct';
+
+
+            $('normalFields')
+              .classList.toggle(
+                'hidden',
+                correcting
+              );
+
+
+            $('correctionFields')
+              .classList.toggle(
+                'hidden',
+                !correcting
+              );
 
 
             $('fuelField')
               .classList.toggle(
                 'hidden',
-                reverse ||
-                correction
-              );
-
-
-            $('fuelExamples')
-              .classList.toggle(
-                'hidden',
-                reverse ||
-                correction
+                reverse
               );
 
 
@@ -1542,31 +1793,19 @@
               );
 
 
+            $('fuelExamples')
+              .classList.toggle(
+                'hidden',
+                reverse ||
+                correcting
+              );
+
+
             $('oilExamples')
               .classList.toggle(
                 'hidden',
-                !reverse
-              );
-
-
-            $('correctionFields')
-              .classList.toggle(
-                'hidden',
-                !correction
-              );
-
-
-            $('normalMixSwitch')
-              .classList.toggle(
-                'hidden',
-                correction
-              );
-
-
-            $('normalMixField')
-              .classList.toggle(
-                'hidden',
-                correction
+                !reverse ||
+                correcting
               );
 
 
@@ -1579,12 +1818,12 @@
     );
 
 
-  /* Normal % / 1:X */
+  /* PROCENT / FÖRHÅLLANDE */
 
 
   document
     .querySelectorAll(
-      '.normal-mix-btn'
+      '.mix-btn'
     )
     .forEach(
       button => {
@@ -1613,7 +1852,7 @@
 
             document
               .querySelectorAll(
-                '.normal-mix-btn'
+                '.mix-btn'
               )
               .forEach(
                 item =>
@@ -1628,8 +1867,10 @@
               mixMode === 'ratio'
             ) {
 
-              mixValue.value =
+              $('mixValue').value =
+
                 oldPercent
+
                   ? (
                       100 /
                       oldPercent
@@ -1639,11 +1880,13 @@
                       '.0',
                       ''
                     )
+
                   : '50';
 
 
               $('mixLabel').textContent =
                 'Blandningsförhållande';
+
 
               $('mixUnit').textContent =
                 '1:X';
@@ -1664,20 +1907,23 @@
 
             else {
 
-              const ratio =
+              const ratioValue =
+
                 Math.max(
                   0,
                   parseFloat(
-                    mixValue.value
+                    $('mixValue').value
                   ) || 0
                 );
 
 
-              mixValue.value =
-                ratio
+              $('mixValue').value =
+
+                ratioValue
+
                   ? (
                       100 /
-                      ratio
+                      ratioValue
                     )
                     .toFixed(2)
                     .replace(
@@ -1688,11 +1934,13 @@
                       /\.$/,
                       ''
                     )
+
                   : '2';
 
 
               $('mixLabel').textContent =
                 'Oljeblandning';
+
 
               $('mixUnit').textContent =
                 '%';
@@ -1721,147 +1969,7 @@
     );
 
 
-  /* Korrigering % / 1:X */
-
-
-  document
-    .querySelectorAll(
-      '.correction-mix-btn'
-    )
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          'click',
-          () => {
-
-            if (
-              button.dataset
-                .correctionFormat ===
-              correctionFormat
-            ) {
-
-              return;
-
-            }
-
-
-            const currentPercentValue =
-              correctionPercent(
-                currentCorrection.value
-              );
-
-
-            const targetPercentValue =
-              correctionPercent(
-                targetCorrection.value
-              );
-
-
-            correctionFormat =
-              button.dataset
-                .correctionFormat;
-
-
-            document
-              .querySelectorAll(
-                '.correction-mix-btn'
-              )
-              .forEach(
-                item =>
-                  item.classList.toggle(
-                    'active',
-                    item === button
-                  )
-              );
-
-
-            if (
-              correctionFormat ===
-              'ratio'
-            ) {
-
-              currentCorrection.value =
-                fmt(
-                  100 /
-                  currentPercentValue,
-                  1
-                )
-                .replace(
-                  ',',
-                  '.'
-                );
-
-
-              targetCorrection.value =
-                fmt(
-                  100 /
-                  targetPercentValue,
-                  1
-                )
-                .replace(
-                  ',',
-                  '.'
-                );
-
-
-              $('currentCorrectionUnit')
-                .textContent =
-                '1:X';
-
-
-              $('targetCorrectionUnit')
-                .textContent =
-                '1:X';
-
-            }
-
-            else {
-
-              currentCorrection.value =
-                fmt(
-                  currentPercentValue,
-                  2
-                )
-                .replace(
-                  ',',
-                  '.'
-                );
-
-
-              targetCorrection.value =
-                fmt(
-                  targetPercentValue,
-                  2
-                )
-                .replace(
-                  ',',
-                  '.'
-                );
-
-
-              $('currentCorrectionUnit')
-                .textContent =
-                '%';
-
-
-              $('targetCorrectionUnit')
-                .textContent =
-                '%';
-
-            }
-
-
-            calculate();
-
-          }
-        );
-
-      }
-    );
-
-
-  /* Snabbval procent */
+  /* SNABBVAL PROCENT */
 
 
   document
@@ -1871,23 +1979,21 @@
     .forEach(
       button => {
 
-        button.addEventListener(
-          'click',
+        button.onclick =
           () => {
 
-            mixValue.value =
+            $('mixValue').value =
               button.dataset.pct;
 
             calculate();
 
-          }
-        );
+          };
 
       }
     );
 
 
-  /* Snabbval förhållande */
+  /* SNABBVAL FÖRHÅLLANDE */
 
 
   document
@@ -1897,23 +2003,21 @@
     .forEach(
       button => {
 
-        button.addEventListener(
-          'click',
+        button.onclick =
           () => {
 
-            mixValue.value =
+            $('mixValue').value =
               button.dataset.ratio;
 
             calculate();
 
-          }
-        );
+          };
 
       }
     );
 
 
-  /* Snabbval bensin */
+  /* SNABBVAL BENSIN */
 
 
   document
@@ -1923,23 +2027,21 @@
     .forEach(
       button => {
 
-        button.addEventListener(
-          'click',
+        button.onclick =
           () => {
 
-            fuel.value =
+            $('fuel').value =
               button.dataset.liters;
 
             calculate();
 
-          }
-        );
+          };
 
       }
     );
 
 
-  /* Snabbval olja */
+  /* SNABBVAL OLJA */
 
 
   document
@@ -1949,43 +2051,294 @@
     .forEach(
       button => {
 
-        button.addEventListener(
-          'click',
+        button.onclick =
           () => {
 
-            oilInput.value =
+            $('oilInput').value =
               button.dataset.oil;
 
             calculate();
 
-          }
-        );
+          };
 
       }
     );
 
 
-  /* Uppdatera direkt när man skriver */
+  /* DIREKT UPPDATERING */
 
 
   [
-    fuel,
-    oilInput,
-    mixValue,
-    existingMix,
-    currentCorrection,
-    targetCorrection
+    'fuel',
+    'oilInput',
+    'mixValue',
+    'existingMix',
+    'currentPct',
+    'targetPct'
   ]
   .forEach(
-    input => {
+    id => {
 
-      input.addEventListener(
-        'input',
-        calculate
-      );
+      $(id)
+        .addEventListener(
+          'input',
+          calculate
+        );
 
     }
   );
+
+
+  /* KAMERA / BILD */
+
+
+  $('oilPhoto')
+    .addEventListener(
+      'change',
+      event => {
+
+        const file =
+
+          event.target.files &&
+          event.target.files[0];
+
+
+        if (
+          !file
+        ) {
+
+          return;
+
+        }
+
+
+        const url =
+          URL.createObjectURL(
+            file
+          );
+
+
+        $('photoPreview').src =
+          url;
+
+
+        $('photoPreview').style.display =
+          'block';
+
+
+        $('photoInfo').textContent =
+
+          'Bild vald. Skriv produktnamn eller ' +
+
+          'specifikation från etiketten för ' +
+
+          'sökning i den här versionen.';
+
+      }
+    );
+
+
+  /* POSITION */
+
+
+  $('locationBtn')
+    .addEventListener(
+      'click',
+      () => {
+
+        if (
+          !navigator.geolocation
+        ) {
+
+          $('locationStatus').textContent =
+
+            'Din webbläsare stödjer inte platsdelning.';
+
+          return;
+
+        }
+
+
+        $('locationStatus').textContent =
+          'Hämtar position…';
+
+
+        navigator.geolocation
+          .getCurrentPosition(
+
+            position => {
+
+              userCoords = {
+
+                lat:
+                  position.coords.latitude,
+
+                lng:
+                  position.coords.longitude
+
+              };
+
+
+              $('locationStatus')
+                .classList.add(
+                  'ok'
+                );
+
+
+              $('locationStatus').textContent =
+
+                `Position klar · ` +
+
+                `${userCoords.lat.toFixed(4)}, ` +
+
+                `${userCoords.lng.toFixed(4)}`;
+
+            },
+
+
+            error => {
+
+              $('locationStatus')
+                .classList.remove(
+                  'ok'
+                );
+
+
+              $('locationStatus').textContent =
+
+                'Kunde inte hämta position. ' +
+
+                'Tillåt platsåtkomst i webbläsaren ' +
+
+                'och försök igen.';
+
+            },
+
+
+            {
+              enableHighAccuracy:true,
+              timeout:10000,
+              maximumAge:300000
+            }
+
+          );
+
+      }
+    );
+
+
+  /* LOKAL SÖKNING */
+
+
+  function openLocalSearch(
+    replacement = false
+  ) {
+
+    const product =
+
+      $('productName')
+        .value
+        .trim();
+
+
+    const specs =
+
+      $('oilSpecs')
+        .value
+        .trim();
+
+
+    let query = '';
+
+
+    /* ERSÄTTARE */
+
+    if (
+      replacement
+    ) {
+
+      query =
+
+        (
+          specs
+            ? specs + ' '
+            : ''
+        ) +
+
+        '2-taktsolja ersättare butik';
+
+
+      if (
+        !specs &&
+        product
+      ) {
+
+        query =
+
+          product +
+
+          ' motsvarande 2-taktsolja butik';
+
+      }
+
+    }
+
+
+    /* SAMMA PRODUKT */
+
+    else {
+
+      query =
+
+        (
+          product ||
+          specs ||
+          '2-taktsolja'
+        ) +
+
+        ' butik';
+
+    }
+
+
+    const encoded =
+      encodeURIComponent(
+        query
+      );
+
+
+    const url =
+
+      'https://www.google.com/maps/search/' +
+
+      '?api=1&query=' +
+
+      encoded;
+
+
+    window.open(
+      url,
+      '_blank',
+      'noopener'
+    );
+
+  }
+
+
+  $('sameBtn')
+    .addEventListener(
+      'click',
+      () =>
+        openLocalSearch(false)
+    );
+
+
+  $('replaceBtn')
+    .addEventListener(
+      'click',
+      () =>
+        openLocalSearch(true)
+    );
 
 
   calculate();
